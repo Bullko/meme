@@ -1,10 +1,19 @@
+import { createContext, useState } from "react";
 import "./App.css";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Meme from "./Components/Meme";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+export const ThemeContext = createContext(null);
+
 function App() {
+  const [themeMode, setThemeMode] = useState("light");
+
+  const toggleTheme = () => {
+    setThemeMode((curr) => (curr === "light" ? "dark" : "light"));
+  };
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -18,11 +27,13 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <Header />
-        <Meme />
-        <Footer />
-      </div>
+      <ThemeContext.Provider value={{ themeMode, toggleTheme }}>
+        <div className="App" id={themeMode}>
+          <Header toggleTheme={toggleTheme} />
+          <Meme />
+          <Footer />
+        </div>
+      </ThemeContext.Provider>
     </ThemeProvider>
   );
 }
