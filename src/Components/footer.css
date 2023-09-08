@@ -2,3 +2,9 @@
   text-align: center;
   margin: 1rem;
 }
+
+@media screen and (max-width: 590px) {
+  .info {
+    border-radius: 0;
+  }
+}
